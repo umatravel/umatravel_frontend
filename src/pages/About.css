@@ -1,0 +1,129 @@
+.about-page {
+  padding-top: 80px; /* Navbar height */
+}
+
+.page-header {
+  background-color: var(--primary-color);
+  color: var(--white);
+  padding: var(--spacing-xxl) 0;
+  border-bottom-left-radius: var(--radius-lg);
+  border-bottom-right-radius: var(--radius-lg);
+}
+
+.page-header h1 {
+  color: var(--white);
+}
+
+.page-subtitle {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.25rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.text-primary {
+  color: var(--primary-color);
+}
+
+.text-accent-terra {
+  color: var(--accent-terra);
+}
+
+.mission-box {
+  background-color: rgba(226, 94, 62, 0.05);
+  border-left: 4px solid var(--accent-terra);
+  padding: 1.5rem;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.mission-box h3 {
+  margin-bottom: 0.5rem;
+}
+
+.about-values {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.value-card {
+  background-color: var(--white);
+  padding: 1.5rem;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid rgba(0,0,0,0.03);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.value-icon {
+  color: var(--accent-gold);
+  margin-bottom: 1rem;
+}
+
+.value-card h4 {
+  margin-bottom: 0.5rem;
+  color: var(--primary-color);
+}
+
+.value-card p {
+  margin-bottom: 0;
+  font-size: 0.95rem;
+}
+
+.bg-light {
+  background-color: var(--white);
+}
+
+.office-section {
+  padding: var(--spacing-xl) 0;
+}
+
+.office-gallery {
+  display: flex;
+  justify-content: center;
+}
+
+.office-card {
+  background-color: var(--bg-color);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  max-width: 500px;
+  text-align: left;
+}
+
+.placeholder-img {
+  width: 100%;
+  height: 250px;
+  background-color: var(--accent-gold);
+  background-image: linear-gradient(135deg, rgba(218, 192, 163, 0.8) 0%, rgba(226, 94, 62, 0.6) 100%);
+}
+
+.office-info {
+  padding: 1.5rem;
+}
+
+.office-info h3 {
+  margin-bottom: 0.5rem;
+  color: var(--primary-color);
+}
+
+.text-sm {
+  font-size: 0.85rem;
+}
+
+@media (max-width: 992px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+}

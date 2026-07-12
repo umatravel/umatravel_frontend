@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css2?family=Afacad:ital,wght@0,400..700;1,400..700&family=Kaushan+Script&display=swap');
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    /* Uma International Brand Palette */
+    --primary-navy: #0E545A;
+    --primary-teal: #0B5E63;
+    --accent-orange: #F59E0B;
+    --accent-gold: #ECA815;
+    --accent-lime: #86C232;
+    --bg-warm-sand: #FAFAF7;
+    --text-main: #1E293B;
+    --text-muted: #64748B;
+    --font-heading: 'Afacad', sans-serif;
+    --font-body: 'Afacad', sans-serif;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: var(--font-body);
+    background-color: var(--bg-warm-sand);
+    color: var(--text-main);
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    line-height: 1.2;
+    font-weight: 700;
+  }
+
+  .font-script {
+    font-family: 'Kaushan Script', cursive;
+  }
+}
+
+@layer components {
+  /* Reusable Button Utility Patterns (Uma International Buttons) */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-[#86C232] hover:bg-[#A3E635] text-[#0A2540] font-bold text-base shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 cursor-pointer;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-[#0E545A] hover:bg-[#0B5E63] text-white font-bold text-base shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 cursor-pointer;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full border border-slate-300 text-slate-700 font-semibold text-base hover:bg-slate-100 hover:text-slate-900 transition-all duration-200 cursor-pointer;
+  }
+
+  /* Reusable Card Pattern with Hover Lift */
+  .card-premium {
+    @apply bg-white rounded-3xl border border-slate-200/80 p-6 md:p-8 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 ease-out;
+  }
+
+  /* Reusable Badges */
+  .badge-featured {
+    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F59E0B]/15 text-[#D97706] text-xs font-extrabold uppercase tracking-wider border border-[#F59E0B]/30 shadow-xs;
+  }
+
+  .badge-customizable {
+    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-100/90 text-blue-950 text-[11px] font-extrabold uppercase tracking-wider border border-blue-300 shadow-xs;
+  }
+
+  .badge-bestseller {
+    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100/90 text-emerald-900 text-[11px] font-extrabold uppercase tracking-wider border border-emerald-300 shadow-xs;
+  }
+
+  /* Section Container */
+  .section-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24;
+  }
+
+  /* Reusable Form Input Pattern */
+  .input-premium {
+    @apply w-full px-4 py-3 rounded-xl border border-slate-300 bg-white text-slate-900 placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-[#D96B27] focus:border-transparent transition-all duration-200;
+  }
+}
+
+/* Custom utility definitions for smooth micro-animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.7; }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 4s ease-in-out infinite;
+}
+
+/* Custom scrollbar for modern aesthetics */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #FAFAF7;
+}
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}

@@ -1,0 +1,105 @@
+.services-page {
+  padding-top: 80px;
+}
+
+.services-list {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.service-detail-card {
+  display: flex;
+  background-color: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 3rem;
+  box-shadow: var(--shadow-md);
+  border: 1px solid rgba(0,0,0,0.03);
+  gap: 3rem;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.service-detail-card:hover {
+  transform: translateY(-5px);
+}
+
+.service-detail-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 100%;
+}
+
+.accent-flight::before { background-color: var(--primary-color); }
+.accent-train::before { background-color: var(--accent-terra); }
+.accent-hotel::before { background-color: var(--accent-gold); }
+.accent-tours::before { background-color: #2F80ED; } /* Just an extra accent */
+
+.service-icon-large {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  color: var(--primary-color);
+  background-color: rgba(15, 44, 89, 0.05);
+  padding: 1.5rem;
+  border-radius: var(--radius-md);
+  height: fit-content;
+}
+
+.service-detail-content {
+  flex: 1;
+}
+
+.service-detail-content h2 {
+  margin-bottom: 1rem;
+}
+
+.service-detail-desc {
+  font-size: 1.1rem;
+  color: var(--text-light);
+  margin-bottom: 1.5rem;
+}
+
+.service-features {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.service-features li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  color: var(--text-main);
+  font-weight: 500;
+}
+
+.feature-icon {
+  color: var(--accent-terra);
+  flex-shrink: 0;
+}
+
+.cta-section {
+  padding: var(--spacing-xxl) 0;
+  background-color: var(--white);
+  border-top: 1px solid rgba(0,0,0,0.05);
+}
+
+@media (max-width: 768px) {
+  .service-detail-card {
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 2rem;
+  }
+  .service-features {
+    grid-template-columns: 1fr;
+  }
+}
