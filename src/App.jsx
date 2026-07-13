@@ -13,6 +13,9 @@ import { About } from './pages/About.jsx';
 import { Contact } from './pages/Contact.jsx';
 import { AdminLogin } from './pages/AdminLogin.jsx';
 import { AdminDashboard } from './pages/AdminDashboard.jsx';
+import { AdminLayout } from './pages/admin/AdminLayout.jsx';
+import { Dashboard } from './pages/admin/Dashboard.jsx';
+import { Bookings } from './pages/admin/Bookings.jsx';
 import { ProtectedRoute } from './components/auth/ProtectedRoute.jsx';
 
 export function App() {
@@ -30,14 +33,22 @@ export function App() {
             <Route path="about" element={<About />} />
             <Route path="contact" element={<Contact />} />
             <Route path="admin/login" element={<AdminLogin />} />
-            <Route
-              path="admin/dashboard"
-              element={
-                <ProtectedRoute>
-                  <AdminDashboard />
-                </ProtectedRoute>
-              }
-            />
+          </Route>
+
+          {/* Dedicated Admin Portal Layout & Routes */}
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute>
+                <AdminLayout />
+              </ProtectedRoute>
+            }
+          >
+            <Route index element={<Dashboard />} />
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="packages" element={<AdminDashboard defaultTab="packages" />} />
+            <Route path="bookings" element={<Bookings />} />
+            <Route path="stories" element={<AdminDashboard defaultTab="stories" />} />
           </Route>
         </Routes>
       </Router>

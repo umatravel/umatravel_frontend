@@ -34,7 +34,7 @@ export const Packages = () => {
   // Local filter states (sync with URL query initially and on prop changes)
   const [localDest, setLocalDest] = useState(urlDestination);
   const [localCategory, setLocalCategory] = useState(urlCategory);
-  const [localMaxPrice, setLocalMaxPrice] = useState(urlMaxPrice || '10000');
+  const [localMaxPrice, setLocalMaxPrice] = useState(urlMaxPrice || '100000');
   const [localDuration, setLocalDuration] = useState(urlDuration);
   const [localCustomizable, setLocalCustomizable] = useState(urlCustomizable);
   const [localSearch, setLocalSearch] = useState(urlSearch);
@@ -50,7 +50,7 @@ export const Packages = () => {
   useEffect(() => {
     setLocalDest(urlDestination);
     setLocalCategory(urlCategory);
-    setLocalMaxPrice(urlMaxPrice || '10000');
+    setLocalMaxPrice(urlMaxPrice || '100000');
     setLocalDuration(urlDuration);
     setLocalCustomizable(urlCustomizable);
     setLocalSearch(urlSearch);
@@ -64,69 +64,65 @@ export const Packages = () => {
       return;
     }
 
-    const timer = setTimeout(() => {
-      if (localSearch !== urlSearch) {
-        const params = new URLSearchParams(searchParams);
-        if (localSearch.trim()) {
-          params.set('search', localSearch.trim());
-        } else {
-          params.delete('search');
-        }
-        params.set('page', '1');
-        setSearchParams(params);
-      }
-    }, 400);
+    const handler = setTimeout(() => {
+      const params = new URLSearchParams(searchParams);
+      if (localSearch.trim()) params.set('search', localSearch.trim());
+      else params.delete('search');
 
-    return () => clearTimeout(timer);
+      params.set('page', '1');
+      setSearchParams(params);
+    }, 450);
+
+    return () => clearTimeout(handler);
   }, [localSearch]);
 
-  // Fetch packages whenever URL parameters change
-  const fetchPackages = async () => {
-    setLoading(true);
-    setError(null);
-    try {
+  // Fetch packages whenever search parameters or page changes
+  useEffect(() => {
+    const fetchPackages = async () => {
+      setLoading(true);
+      setError(null);
+
       const params = new URLSearchParams();
       if (urlDestination) params.append('destination', urlDestination);
       if (urlCategory) params.append('category', urlCategory);
-      if (urlMaxPrice && urlMaxPrice !== '10000') params.append('maxPrice', urlMaxPrice);
+      if (urlMaxPrice && urlMaxPrice !== '100000') params.append('maxPrice', urlMaxPrice);
       if (urlDuration) params.append('duration', urlDuration);
       if (urlCustomizable) params.append('customizable', 'true');
       if (urlSearch) params.append('search', urlSearch);
-      params.append('page', String(urlPage));
+      params.append('page', urlPage.toString());
       params.append('limit', '9');
 
-      const res = await api.get(`/packages?${params.toString()}`);
-      setPackages(res.data || []);
-      if (res.pagination) {
-        setPagination(res.pagination);
-      } else {
-        setPagination({ page: urlPage, totalPages: 1, total: res.data ? res.data.length : 0 });
+      try {
+        const res = await api.get(`/packages?${params.toString()}`);
+        if (res?.success) {
+          setPackages(res.data || []);
+          if (res.pagination) {
+            setPagination(res.pagination);
+          }
+        }
+      } catch (err) {
+        console.error('Error fetching packages:', err);
+        setError('Failed to load packages. Please try again or check network connection.');
+      } finally {
+        setLoading(false);
       }
-    } catch (err) {
-      console.error('Error fetching packages:', err);
-      setError(err.message || 'Failed to load tour catalog. Please check your connection and try again.');
-    } finally {
-      setLoading(false);
-    }
-  };
+    };
 
-  useEffect(() => {
     fetchPackages();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [urlDestination, urlCategory, urlMaxPrice, urlDuration, urlCustomizable, urlSearch, urlPage]);
 
-  // Apply filters manually when sidebar form is submitted or filter changed
-  const applySidebarFilters = (e) => {
-    e?.preventDefault();
+  // Apply button inside sidebar filter
+  const handleApplyFilters = () => {
     const params = new URLSearchParams(searchParams);
 
     if (localDest.trim()) params.set('destination', localDest.trim());
     else params.delete('destination');
 
-    if (localCategory) params.set('category', localCategory);
+    if (localCategory.trim()) params.set('category', localCategory.trim());
     else params.delete('category');
 
-    if (localMaxPrice && localMaxPrice !== '10000') params.set('maxPrice', localMaxPrice);
+    if (localMaxPrice && localMaxPrice !== '100000') params.set('maxPrice', localMaxPrice);
     else params.delete('maxPrice');
 
     if (localDuration.trim()) params.set('duration', localDuration.trim());
@@ -143,7 +139,7 @@ export const Packages = () => {
   const handleResetFilters = () => {
     setLocalDest('');
     setLocalCategory('');
-    setLocalMaxPrice('10000');
+    setLocalMaxPrice('100000');
     setLocalDuration('');
     setLocalCustomizable(false);
     setLocalSearch('');
@@ -153,7 +149,7 @@ export const Packages = () => {
 
   const categories = ['Adventure', 'Honeymoon', 'Cultural', 'Wildlife', 'Luxury Escape', 'Beach Resort'];
   const hasActiveFilters = Boolean(
-    urlDestination || urlCategory || (urlMaxPrice && urlMaxPrice !== '10000') || urlDuration || urlCustomizable || urlSearch
+    urlDestination || urlCategory || (urlMaxPrice && urlMaxPrice !== '100000') || urlDuration || urlCustomizable || urlSearch
   );
 
   return (
@@ -367,22 +363,22 @@ export const Packages = () => {
                     Max Price Limit
                   </label>
                   <span className="text-xs font-extrabold text-[#D96B27]">
-                    ${Number(localMaxPrice || 10000).toLocaleString()}
+                    ₹{Number(localMaxPrice || 100000).toLocaleString('en-IN')}
                   </span>
                 </div>
                 <input
                   type="range"
-                  min="500"
-                  max="10000"
-                  step="250"
-                  value={localMaxPrice || '10000'}
+                  min="1000"
+                  max="100000"
+                  step="1000"
+                  value={localMaxPrice || '100000'}
                   onChange={(e) => setLocalMaxPrice(e.target.value)}
                   className="w-full accent-[#D96B27] cursor-pointer"
                 />
                 <div className="flex items-center justify-between text-[11px] text-slate-400 font-semibold">
-                  <span>$500</span>
-                  <span>$5,000</span>
-                  <span>$10,000+</span>
+                  <span>₹1,000</span>
+                  <span>₹50,000</span>
+                  <span>₹1,00,000+</span>
                 </div>
               </div>
 
@@ -629,22 +625,22 @@ export const Packages = () => {
                         Max Price Limit
                       </label>
                       <span className="text-xs font-extrabold text-[#D96B27]">
-                        ${Number(localMaxPrice || 10000).toLocaleString()}
+                        ₹{Number(localMaxPrice || 100000).toLocaleString('en-IN')}
                       </span>
                     </div>
                     <input
                       type="range"
-                      min="500"
-                      max="10000"
-                      step="250"
-                      value={localMaxPrice || '10000'}
+                      min="1000"
+                      max="100000"
+                      step="1000"
+                      value={localMaxPrice || '100000'}
                       onChange={(e) => setLocalMaxPrice(e.target.value)}
                       className="w-full accent-[#D96B27]"
                     />
                     <div className="flex items-center justify-between text-[11px] text-slate-400 font-semibold">
-                      <span>$500</span>
-                      <span>$5,000</span>
-                      <span>$10,000+</span>
+                      <span>₹1,000</span>
+                      <span>₹50,000</span>
+                      <span>₹1,00,000+</span>
                     </div>
                   </div>
 

@@ -1,16 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ShieldCheck, LogOut, Package, BookOpen, Calendar, DollarSign, Users, Plus, CheckCircle, XCircle, Clock, Trash2, Eye, Edit } from 'lucide-react';
+import { ShieldCheck, LogOut, Package, BookOpen, Calendar, IndianRupee, Users, Plus, CheckCircle, XCircle, Clock, Trash2, Eye, Edit } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useAuth } from '../hooks/useAuth.js';
 import { api } from '../lib/api.js';
 import { formatCurrency, formatDate } from '../utils/format.js';
 
-export const AdminDashboard = () => {
+export const AdminDashboard = ({ defaultTab = 'overview' }) => {
   const { user, isAdmin, loading: authLoading, logout } = useAuth();
   const navigate = useNavigate();
 
-  const [activeTab, setActiveTab] = useState('overview');
+  const [activeTab, setActiveTab] = useState(defaultTab);
+
+  useEffect(() => {
+    if (defaultTab) {
+      setActiveTab(defaultTab);
+    }
+  }, [defaultTab]);
+
   const [stats, setStats] = useState(null);
   const [bookings, setBookings] = useState([]);
   const [packages, setPackages] = useState([]);
@@ -303,64 +310,68 @@ export const AdminDashboard = () => {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8 pb-24">
-      {/* Dashboard Top Header */}
-      <div className="bg-slate-900 text-white rounded-3xl p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6 shadow-xl">
-        <div className="flex items-center gap-4">
-          <div className="w-14 h-14 rounded-2xl bg-amber-600 flex items-center justify-center text-white shadow-md">
-            <ShieldCheck className="w-8 h-8" />
-          </div>
-          <div>
-            <span className="text-xs font-bold uppercase tracking-widest text-amber-400">
-              Control Panel
-            </span>
-            <h1 className="font-heading font-extrabold text-2xl sm:text-3xl text-white">
-              Admin Management Portal
-            </h1>
-            <p className="text-xs text-slate-400 mt-0.5">Logged in as {user?.email}</p>
-          </div>
-        </div>
+    <div className="space-y-8 pb-14">
+      {defaultTab === 'overview' && (
+        <>
+          {/* Dashboard Top Header */}
+          <div className="bg-slate-900 text-white rounded-3xl p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6 shadow-xl">
+            <div className="flex items-center gap-4">
+              <div className="w-14 h-14 rounded-2xl bg-amber-600 flex items-center justify-center text-white shadow-md">
+                <ShieldCheck className="w-8 h-8" />
+              </div>
+              <div>
+                <span className="text-xs font-bold uppercase tracking-widest text-amber-400">
+                  Control Panel
+                </span>
+                <h1 className="font-heading font-extrabold text-2xl sm:text-3xl text-white">
+                  Admin Management Portal
+                </h1>
+                <p className="text-xs text-slate-400 mt-0.5">Logged in as {user?.email}</p>
+              </div>
+            </div>
 
-        <button
-          onClick={async () => {
-            try {
-              await logout();
-              toast.success('Signed out cleanly.');
-            } catch (err) {
-              console.error('Logout error:', err);
-            } finally {
-              navigate('/admin/login', { replace: true });
-            }
-          }}
-          className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs font-semibold transition self-start sm:self-auto cursor-pointer"
-        >
-          <LogOut className="w-4 h-4 text-[#E69536]" />
-          <span>Sign Out</span>
-        </button>
-      </div>
+            <button
+              onClick={async () => {
+                try {
+                  await logout();
+                  toast.success('Signed out cleanly.');
+                } catch (err) {
+                  console.error('Logout error:', err);
+                } finally {
+                  navigate('/admin/login', { replace: true });
+                }
+              }}
+              className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs font-semibold transition self-start sm:self-auto cursor-pointer"
+            >
+              <LogOut className="w-4 h-4 text-[#E69536]" />
+              <span>Sign Out</span>
+            </button>
+          </div>
 
-      {/* Tabs */}
-      <div className="flex items-center gap-3 border-b border-slate-200 pb-3 overflow-x-auto">
-        {[
-          { id: 'overview', name: 'Overview Stats', icon: DollarSign },
-          { id: 'bookings', name: `Guest Bookings (${bookings.length})`, icon: Calendar },
-          { id: 'packages', name: `Tour Packages (${packages.length})`, icon: Package },
-          { id: 'stories', name: `Travel Stories (${stories.length})`, icon: BookOpen },
-        ].map((tab) => (
-          <button
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
-            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition whitespace-nowrap ${
-              activeTab === tab.id
-                ? 'bg-blue-900 text-white shadow-sm'
-                : 'text-slate-600 hover:bg-slate-100'
-            }`}
-          >
-            <tab.icon className="w-4 h-4" />
-            <span>{tab.name}</span>
-          </button>
-        ))}
-      </div>
+          {/* Tabs */}
+          <div className="flex items-center gap-3 border-b border-slate-200 pb-3 overflow-x-auto">
+            {[
+              { id: 'overview', name: 'Overview Stats', icon: IndianRupee },
+              { id: 'bookings', name: `Guest Bookings (${bookings.length})`, icon: Calendar },
+              { id: 'packages', name: `Tour Packages (${packages.length})`, icon: Package },
+              { id: 'stories', name: `Travel Stories (${stories.length})`, icon: BookOpen },
+            ].map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition whitespace-nowrap ${
+                  activeTab === tab.id
+                    ? 'bg-blue-900 text-white shadow-sm'
+                    : 'text-slate-600 hover:bg-slate-100'
+                }`}
+              >
+                <tab.icon className="w-4 h-4" />
+                <span>{tab.name}</span>
+              </button>
+            ))}
+          </div>
+        </>
+      )}
 
       {/* Tab Contents */}
       {loadingData ? (
@@ -521,7 +532,7 @@ export const AdminDashboard = () => {
                 <h3 className="font-heading font-bold text-xl text-slate-900">Catalog Management</h3>
                 <button
                   onClick={() => setShowPackageModal(true)}
-                  className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-blue-900 text-white text-xs font-semibold shadow-md hover:bg-blue-800 transition"
+                  className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#0E545A] text-white text-xs font-semibold shadow-2xs hover:bg-[#0b4247] transition"
                 >
                   <Plus className="w-4 h-4" />
                   <span>Create Tour Package</span>
@@ -537,7 +548,7 @@ export const AdminDashboard = () => {
                         <div className="flex items-center gap-1.5">
                           {p.is_featured && (
                             <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800 flex items-center gap-1">
-                              ⭐ Featured
+                              Featured
                             </span>
                           )}
                           <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${p.status === 'published' ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-700'}`}>
@@ -551,7 +562,7 @@ export const AdminDashboard = () => {
 
                     <div className="pt-4 border-t border-slate-100 flex flex-col gap-3">
                       <div className="flex items-center justify-between">
-                        <span className="font-bold text-blue-900">{formatCurrency(p.price)}</span>
+                        <span className="font-bold text-[#0E545A]">{formatCurrency(p.price)}</span>
                         <button
                           onClick={() => handleUpdatePackageFeatured(p.id, p.is_featured)}
                           className={`px-2.5 py-1 rounded text-xs font-semibold border transition flex items-center gap-1 ${
@@ -605,7 +616,7 @@ export const AdminDashboard = () => {
                 <h3 className="font-heading font-bold text-xl text-slate-900">Travel Chronicles</h3>
                 <button
                   onClick={() => setShowStoryModal(true)}
-                  className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-blue-900 text-white text-xs font-semibold shadow-md hover:bg-blue-800 transition"
+                  className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#0E545A] text-white text-xs font-semibold shadow-2xs hover:bg-[#0b4247] transition"
                 >
                   <Plus className="w-4 h-4" />
                   <span>Publish New Story</span>

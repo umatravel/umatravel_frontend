@@ -1,13 +1,13 @@
 /**
- * Format numeric price to USD currency string
+ * Format numeric price to INR (₹ Rupee) currency string
  */
 export const formatCurrency = (amount) => {
-  if (amount === undefined || amount === null || isNaN(amount)) return '$0.00';
-  return new Intl.NumberFormat('en-US', {
+  if (amount === undefined || amount === null || isNaN(amount)) return '₹0';
+  return new Intl.NumberFormat('en-IN', {
     style: 'currency',
-    currency: 'USD',
+    currency: 'INR',
     minimumFractionDigits: 0,
-    maximumFractionDigits: 2,
+    maximumFractionDigits: 0,
   }).format(Number(amount));
 };
 
