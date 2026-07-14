@@ -318,7 +318,7 @@ export const Packages = () => {
               )}
             </div>
 
-            <form onSubmit={applySidebarFilters} className="space-y-6">
+            <form onSubmit={handleApplyFilters} className="space-y-6">
               {/* Destination Filter */}
               <div className="space-y-2">
                 <label className="text-xs font-bold uppercase tracking-wider text-slate-700 block">
@@ -580,7 +580,7 @@ export const Packages = () => {
                   </button>
                 </div>
 
-                <form onSubmit={applySidebarFilters} className="space-y-6">
+                <form onSubmit={handleApplyFilters} className="space-y-6">
                   {/* Destination */}
                   <div className="space-y-2">
                     <label className="text-xs font-bold uppercase tracking-wider text-slate-700 block">
