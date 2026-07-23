@@ -27,7 +27,7 @@
         },
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; img-src 'self' data: blob: https://*.supabase.co https://images.unsplash.com https://s7ap1.scene7.com https://maps.gstatic.com https://*.googleapis.com; font-src 'self' data: https://fonts.gstatic.com https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://maps.googleapis.com; connect-src 'self' https://*.supabase.co https://*.googleapis.com https://umatravel.onrender.com; frame-ancestors 'none';"
+          "value": "default-src 'self'; img-src 'self' data: blob: https://*.supabase.co https://images.unsplash.com https://s7ap1.scene7.com https://*.gstatic.com https://*.googleapis.com; font-src 'self' data: https://fonts.gstatic.com https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://maps.googleapis.com; connect-src 'self' https://*.supabase.co https://*.googleapis.com https://umatravel.onrender.com; frame-ancestors 'none';"
         }
       ]
     }
