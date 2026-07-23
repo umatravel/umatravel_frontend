@@ -212,13 +212,14 @@ export const Home = () => {
             </motion.div>
 
             {/* Dashed Airplane Flight Loop */}
-            <svg className="absolute inset-0 w-full h-full">
+            <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
               <path
-                d="M 32% 42% Q 42% 18% 55% 35% T 72% 48%"
+                d="M 32 42 Q 42 18 55 35 T 72 48"
                 fill="none"
                 stroke="white"
                 strokeWidth="2.5"
                 strokeDasharray="8 10"
+                vectorEffect="non-scaling-stroke"
                 className="opacity-75"
               />
             </svg>

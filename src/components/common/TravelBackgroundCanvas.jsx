@@ -77,7 +77,7 @@ export const TravelBackgroundCanvas = ({ variant = 'dark' }) => {
         </motion.div>
 
         {/* High-Altitude Flight Arc 1 (Smooth, graceful sweep across the sky) */}
-        <svg className="absolute inset-0 w-full h-full opacity-35">
+        <svg className="absolute inset-0 w-full h-full opacity-35" viewBox="0 0 100 100" preserveAspectRatio="none">
           <defs>
             <linearGradient id="cleanArcGrad" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stopColor={isDark ? '#E69536' : '#D96B27'} stopOpacity="0" />
@@ -86,11 +86,12 @@ export const TravelBackgroundCanvas = ({ variant = 'dark' }) => {
             </linearGradient>
           </defs>
           <path
-            d="M -10% 35% Q 45% -5% 110% 45%"
+            d="M -10 35 Q 45 -5 110 45"
             fill="none"
             stroke="url(#cleanArcGrad)"
             strokeWidth="1.5"
             strokeDasharray="6 10"
+            vectorEffect="non-scaling-stroke"
           />
         </svg>
 

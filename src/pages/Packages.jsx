@@ -77,37 +77,37 @@ export const Packages = () => {
   }, [localSearch]);
 
   // Fetch packages whenever search parameters or page changes
-  useEffect(() => {
-    const fetchPackages = async () => {
-      setLoading(true);
-      setError(null);
+  const fetchPackages = async () => {
+    setLoading(true);
+    setError(null);
 
-      const params = new URLSearchParams();
-      if (urlDestination) params.append('destination', urlDestination);
-      if (urlCategory) params.append('category', urlCategory);
-      if (urlMaxPrice && urlMaxPrice !== '100000') params.append('maxPrice', urlMaxPrice);
-      if (urlDuration) params.append('duration', urlDuration);
-      if (urlCustomizable) params.append('customizable', 'true');
-      if (urlSearch) params.append('search', urlSearch);
-      params.append('page', urlPage.toString());
-      params.append('limit', '9');
+    const params = new URLSearchParams();
+    if (urlDestination) params.append('destination', urlDestination);
+    if (urlCategory) params.append('category', urlCategory);
+    if (urlMaxPrice && urlMaxPrice !== '100000') params.append('maxPrice', urlMaxPrice);
+    if (urlDuration) params.append('duration', urlDuration);
+    if (urlCustomizable) params.append('customizable', 'true');
+    if (urlSearch) params.append('search', urlSearch);
+    params.append('page', urlPage.toString());
+    params.append('limit', '9');
 
-      try {
-        const res = await api.get(`/packages?${params.toString()}`);
-        if (res?.success) {
-          setPackages(res.data || []);
-          if (res.pagination) {
-            setPagination(res.pagination);
-          }
+    try {
+      const res = await api.get(`/packages?${params.toString()}`);
+      if (res?.success) {
+        setPackages(res.data || []);
+        if (res.pagination) {
+          setPagination(res.pagination);
         }
-      } catch (err) {
-        console.error('Error fetching packages:', err);
-        setError('Failed to load packages. Please try again or check network connection.');
-      } finally {
-        setLoading(false);
       }
-    };
+    } catch (err) {
+      console.error('Error fetching packages:', err);
+      setError('Failed to load packages. Please try again or check network connection.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchPackages();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [urlDestination, urlCategory, urlMaxPrice, urlDuration, urlCustomizable, urlSearch, urlPage]);
