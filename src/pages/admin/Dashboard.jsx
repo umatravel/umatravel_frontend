@@ -37,8 +37,8 @@ export const Dashboard = () => {
         api.get('/admin/bookings?limit=5'),
       ]);
 
-      if (statsRes?.success) {
-        setStats(statsRes.data || {
+      if (statsRes?.success && statsRes.data) {
+        setStats(statsRes.data.stats || {
           totalBookings: 0,
           pendingBookings: 0,
           revenueThisMonth: 0,
